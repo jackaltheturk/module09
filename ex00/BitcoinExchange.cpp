@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:13 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/19 12:06:47 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/19 12:42:26 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,29 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &source)
 
 BitcoinExchange::~BitcoinExchange() {}
 
+void BitcoinExchange::Database()
+{
+	std::string		line;
+	std::ifstream	dataFile;
 
+
+	dataFile.open("data.csv");
+	if (!dataFile.is_open())
+		throw NoDataExc();
+	if(!std::getline(dataFile, line))
+		return;
+	if (line != "date,exchange_rate")
+		throw DataFormatExc();
+	do
+	{
+		
+	}while(std::getline(dataFile, line));
+	
+}
 
 const char *BitcoinExchange::NoDataExc::what() const throw()
 {
-	return "ERROR : There is no \"data.csv\" file!";
+	return "ERROR : No \"data.csv\" file or failed to open the file!!";
 }
 
 const char *BitcoinExchange::NoInputExc::what() const throw()
