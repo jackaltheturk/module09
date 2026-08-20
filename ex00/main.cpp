@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:28 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/19 12:04:19 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/20 06:25:13 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 int main(int argc, char **argv)
 {
+	
+	(void)argv;
 	if (argc != 2)
 	{
-		std::cout << "Error: could not open file." << std::endl;
+		std::cout << "Usage = ./btc \"input file name\"" << std::endl;
 		return (1);
 	}
 	try
