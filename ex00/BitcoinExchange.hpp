@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:09 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/19 12:05:50 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 07:06:50 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,19 @@
 class BitcoinExchange
 {
 	private:
+	
 		std::map<std::string, double> _data;
+		bool controlDate(const std::string &date);
+		bool BitcoinExchange::controlAmount(const std::string& amountStr, double& val);
 		
 	public:
+	
 		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange &sample);
 		BitcoinExchange &operator=(const BitcoinExchange &source);
 		~BitcoinExchange();
 		void Database();
+		void inputFile(std::string input);
 		
 		class NoDataExc : public std::exception
 		{

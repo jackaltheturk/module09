@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:28 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/20 06:25:13 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 06:03:12 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	{
 		BitcoinExchange transaction;
 		transaction.Database();
-		//transaction.InputFile(argv[1]);
+		transaction.InputFile(argv[1]);
 		//transaction.Run();
 	}
 	catch(std::exception& e)

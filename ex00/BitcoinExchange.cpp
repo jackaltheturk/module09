@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:13 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/20 07:22:27 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 07:21:05 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void BitcoinExchange::Database()
 	}while(std::getline(dataFile, line));
 	
 }
-static bool controlDate(const std::string &date)
+ bool BitcoinExchange::controlDate(const std::string &date)
 {
 	unsigned int				year;
 	unsigned int				month;
@@ -87,6 +87,104 @@ static bool controlDate(const std::string &date)
 
 	return (true);
 }
+bool BitcoinExchange::controlAmount(const std::string& amountStr, double& amountd)
+{
+    if (amountStr.empty())
+    {
+        std::cerr << "Error: bad input => empty value" << std::endl;
+        return true;
+    }
+
+    char *endptr;
+    double d_val = strtod(amountStr.c_str(), &endptr);
+
+    if (amountStr.c_str() == endptr || *endptr != '\0')
+        return false;
+
+    if (d_val < 0)
+        return false;
+
+    if (d_val > 1000.0)
+        return false;
+	
+	amountd = d_val;
+    
+	return true;
+}
+
+void BitcoinExchange::inputFile(std::string input)
+{
+	std::string line;
+	double amountd;
+	
+    std::ifstream file(input.c_str());
+
+    if (!file.is_open())
+	    throw NoInputExc();
+
+    std::getline(file, line);
+	
+	if(line != "date | value")
+		throw InputFormatExc();
+   
+    while (std::getline(file, line))
+    {
+        if (line.empty())
+            continue;
+
+        size_t pipe_pos = line.find('|');
+
+        if (pipe_pos == std::string::npos)
+        {
+            std::cout << "Error on line --> " << line << std::endl;
+            continue;
+        }
+
+        std::string date = line.substr(0, pipe_pos);
+        std::string amount = line.substr(pipe_pos + 1);
+
+        while (!date.empty() && date[date.size() - 1] == ' ')
+            date.erase(date.size() - 1);
+
+        while (!date.empty() && date[0] == ' ')
+            date.erase(0, 1);
+
+        while (!amount.empty() && amount[amount.size() - 1] == ' ')
+            amount.erase(amount.size() - 1);
+
+        while (!amount.empty() && amount[0] == ' ')
+            amount.erase(0, 1);
+
+        if (!controlDate(date)){
+			std::cout << "Date error on line --> "<< line << std::endl;
+            continue;
+		}
+
+        if (controlAmount(amount, amountd)){
+			std::cout << "Amount error on line --> "<< line << std::endl;
+			continue;
+		}
+			
+
+        std::map<std::string, double>::iterator it = _data.upper_bound(date);
+
+        if (it == _data.begin())
+        {
+            std::cout << "No data available for this date --> "
+                      << date << std::endl;
+            continue;
+        }
+
+        --it;
+
+        double exchange_rate = it->second;
+
+        std::cout << date << " => " << amount << " = "
+                  << (amountd * exchange_rate) << std::endl;
+    }
+
+    file.close();
+}
 const char *BitcoinExchange::NoDataExc::what() const throw()
 {
 	return "ERROR : No \"data.csv\" file or failed to open the file!!";
@@ -99,10 +197,10 @@ const char *BitcoinExchange::NoInputExc::what() const throw()
 
 const char *BitcoinExchange::InputFormatExc::what() const throw()
 {
-	return "ERROR : Input file format ain't correct!";
+	return "ERROR : Input file format isnt't correct!";
 }
 
 const char *BitcoinExchange::DataFormatExc::what() const throw()
 {
-	return "ERROR : Database format ain't correct!";
+	return "ERROR : Database format isn't correct!";
 }
