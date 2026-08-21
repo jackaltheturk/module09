@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:09 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/21 12:55:01 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 20:32:41 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ class BitcoinExchange
 	
 		std::map<std::string, double> _data;
 		bool controlDate(const std::string &date);
-		bool BitcoinExchange::controlAmount(const std::string& amountStr, double& val);
+		bool controlAmount(const std::string& amountStr, double& val);
 		
 	public:
 	
@@ -43,11 +43,6 @@ class BitcoinExchange
 				const char *what() const throw();
 		};
 		class NoInputExc : public std::exception
-		{
-			public:
-				const char *what() const throw();
-		};
-		class DataFormatExc : public std::exception
 		{
 			public:
 				const char *what() const throw();

@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:13 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/21 13:12:25 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 20:33:02 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void BitcoinExchange::Database()
 		throw NoDataExc();
 	if(!std::getline(dataFile, line))
 		return;
-	if (line != "date,exchange_rate")
-		throw DataFormatExc();
 	
 	std::string date;
     std::string value;
@@ -70,7 +68,14 @@ void BitcoinExchange::Database()
 	if (date.empty() || date.size() != 10
 		|| date[4] != '-' || date[7] != '-')
 		return (false);
-
+		
+	for (int i = 0; i < 10; i++)
+		{
+			if (i == 4 || i == 7)
+				continue;
+			if (!std::isdigit(date[i]))
+				return (false);
+		}
 	year = static_cast<unsigned int>(std::strtoul(date.substr(0, 4).c_str(), &end, 10));
 	if (*end != '\0')
 		return (false);
@@ -100,27 +105,23 @@ void BitcoinExchange::Database()
 }
 bool BitcoinExchange::controlAmount(const std::string& amountStr, double& amountd)
 {
-    if (amountStr.empty())
-    {
-        std::cerr << "Error: bad input => empty value" << std::endl;
-        return true;
-    }
-
     char *endptr;
     double d_val = strtod(amountStr.c_str(), &endptr);
 
     if (amountStr.c_str() == endptr || *endptr != '\0')
-        return false;
+        return true;
 
-    if (d_val < 0)
-        return false;
+    if (d_val < 0){	
+		return true;
+	}
 
-    if (d_val > 1000.0)
-        return false;
+    if (d_val > 1000.0){
+        return true;	
+	}
 	
 	amountd = d_val;
     
-	return true;
+	return false;
 }
 
 void BitcoinExchange::inputFileRun(std::string input)
@@ -172,7 +173,7 @@ void BitcoinExchange::inputFileRun(std::string input)
 		}
 
         if (controlAmount(amount, amountd)){
-			std::cout << "Amount error on line --> "<< line << std::endl;
+			std::cout << "Value error on line --> "<< line << std::endl;
 			continue;
 		}
 			
@@ -190,7 +191,7 @@ void BitcoinExchange::inputFileRun(std::string input)
 
         double exchange_rate = it->second;
 
-        std::cout << date << " => " << amount << " = "
+        std::cout << date << " --> " << amount << " = "
                   << (amountd * exchange_rate) << std::endl;
     }
 
@@ -209,9 +210,4 @@ const char *BitcoinExchange::NoInputExc::what() const throw()
 const char *BitcoinExchange::InputFormatExc::what() const throw()
 {
 	return "ERROR : Input file format isnt't correct!";
-}
-
-const char *BitcoinExchange::DataFormatExc::what() const throw()
-{
-	return "ERROR : Database format isn't correct!";
 }
