@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:09 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/21 07:06:50 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 12:55:01 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class BitcoinExchange
 		BitcoinExchange &operator=(const BitcoinExchange &source);
 		~BitcoinExchange();
 		void Database();
-		void inputFile(std::string input);
+		void inputFileRun(std::string input);
 		
 		class NoDataExc : public std::exception
 		{

@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:13 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/21 07:21:05 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/21 13:12:25 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,23 @@ void BitcoinExchange::Database()
 		return;
 	if (line != "date,exchange_rate")
 		throw DataFormatExc();
-	do
-	{
-		std::cout << "deneme"<< std::endl;
-	}while(std::getline(dataFile, line));
 	
+	std::string date;
+    std::string value;
+	
+	while (1){
+    if (!std::getline(dataFile, date, ','))
+        break;
+
+    if (std::getline(dataFile, value))
+    {
+        double dValue = strtod(value.c_str(), NULL);
+        _data[date] = dValue;
+    }
+	}
+	dataFile.close();
 }
+
  bool BitcoinExchange::controlDate(const std::string &date)
 {
 	unsigned int				year;
@@ -112,7 +123,7 @@ bool BitcoinExchange::controlAmount(const std::string& amountStr, double& amount
 	return true;
 }
 
-void BitcoinExchange::inputFile(std::string input)
+void BitcoinExchange::inputFileRun(std::string input)
 {
 	std::string line;
 	double amountd;
