@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/22 13:14:49 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/22 13:31:15 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/22 17:22:39 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stack>
 #include <iostream>
-#include <cstdlib>
+#include <cctype>
 
 class RPN
 {
