@@ -14,15 +14,18 @@
 
 int main(int argc, char **argv)
 {
-
     try
     {
-       
+        PmergeMe program;
+
+        program.parse(argc, argv);
+        program.execute();
     }
-    catch(const std::exception& e)
+    catch (const std::exception& error)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << error.what() << std::endl;
+        return 1;
     }
-    
-   
+
+    return 0;
 }

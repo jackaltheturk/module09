@@ -6,21 +6,23 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/22 13:14:49 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/22 17:22:39 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/22 19:36:32 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RPN_HPP
 #define RPN_HPP
 
-#include <stack>
+#include <list>
 #include <iostream>
 #include <cctype>
+#include <string>
 
 class RPN
 {
     private:
-        std::stack<int> storage;
+        std::list<int> storage;
+
     public:
         RPN();
         ~RPN();
@@ -29,4 +31,5 @@ class RPN
 
         void run(const std::string& matExpression);
 };
+
 #endif
