@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/19 06:17:28 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/22 13:22:04 by etorun           ###   ########.fr       */
+/*   Created: 2026/08/22 13:14:49 by etorun            #+#    #+#             */
+/*   Updated: 2026/08/22 13:31:15 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
-#include <iostream>
+#ifndef RPN_HPP
+#define RPN_HPP
 
-int main(int argc, char **argv)
+#include <stack>
+#include <iostream>
+#include <cstdlib>
+
+class RPN
 {
-	
-	if (argc != 2)
-	{
-		std::cout << "Usage = ./btc \"input file name\"" << std::endl;
-		return (1);
-	}
-	try
-	{
-		BitcoinExchange transaction;
-		transaction.Database();
-		transaction.inputFileRun(argv[1]);
-		
-	}
-	catch(std::exception& e)
-	{
-		std::cout << e.what() << std::endl;
-	}
-}
+    private:
+        std::stack<int> storage;
+    public:
+        RPN();
+        ~RPN();
+        RPN(const RPN& source);
+        RPN& operator=(const RPN& other);
+
+        void run(const std::string& matExpression);
+};
+#endif

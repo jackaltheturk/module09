@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   RPN.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/19 06:17:28 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/22 13:22:04 by etorun           ###   ########.fr       */
+/*   Created: 2026/08/22 13:14:58 by etorun            #+#    #+#             */
+/*   Updated: 2026/08/22 13:36:10 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
-#include <iostream>
+#include "RPN.hpp"
 
-int main(int argc, char **argv)
+RPN::RPN(){}
+
+RPN::RPN(const RPN& source)
+{
+    this->storage = source.storage;
+}
+
+RPN::~RPN() {}
+
+RPN& RPN::operator=(const RPN& other)
+{
+    if(this != &other)
+    {
+        this->storage = other.storage;
+    }
+    return *this;
+}
+
+void RPN::run(const std::string& matExpression)
 {
 	
-	if (argc != 2)
-	{
-		std::cout << "Usage = ./btc \"input file name\"" << std::endl;
-		return (1);
-	}
-	try
-	{
-		BitcoinExchange transaction;
-		transaction.Database();
-		transaction.inputFileRun(argv[1]);
-		
-	}
-	catch(std::exception& e)
-	{
-		std::cout << e.what() << std::endl;
-	}
 }
