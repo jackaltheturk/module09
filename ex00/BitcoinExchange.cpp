@@ -6,7 +6,7 @@
 /*   By: etorun <etorun@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 06:17:13 by etorun            #+#    #+#             */
-/*   Updated: 2026/08/21 20:33:02 by etorun           ###   ########.fr       */
+/*   Updated: 2026/08/22 13:01:19 by etorun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,52 +56,48 @@ void BitcoinExchange::Database()
 
  bool BitcoinExchange::controlDate(const std::string &date)
 {
-	unsigned int				year;
-	unsigned int				month;
-	unsigned int				day;
-	char						*end;
-	bool						isLeap;
-	unsigned int				dayLimit;
-	static const unsigned int	daysInMonth[12] =
-		{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    static const unsigned int daysInMonth[12] =
+        {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-	if (date.empty() || date.size() != 10
-		|| date[4] != '-' || date[7] != '-')
-		return (false);
-		
-	for (int i = 0; i < 10; i++)
-		{
-			if (i == 4 || i == 7)
-				continue;
-			if (!std::isdigit(date[i]))
-				return (false);
-		}
-	year = static_cast<unsigned int>(std::strtoul(date.substr(0, 4).c_str(), &end, 10));
-	if (*end != '\0')
-		return (false);
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
+    unsigned int dayLimit;
+    bool isLeap;
 
-	month = static_cast<unsigned int>(std::strtoul(date.substr(5, 2).c_str(), &end, 10));
-	if (*end != '\0')
-		return (false);
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+        return (false);
 
-	day = static_cast<unsigned int>(std::strtoul(date.substr(8, 2).c_str(), &end, 10));
-	if (*end != '\0')
-		return (false);
+    for (int i = 0; i < 10; i++)
+    {
+        if (i != 4 && i != 7 && !std::isdigit(date[i]))
+            return (false);
+    }
 
-	if (year == 0 || month == 0 || month > 12 || day == 0 || day > 31)
-		return (false);
+    year = static_cast<unsigned int>(
+        std::strtoul(date.substr(0, 4).c_str(), NULL, 10));
 
-	isLeap = (year % 400 == 0|| (year % 4 == 0 && year % 100 != 0));
+    month = static_cast<unsigned int>(
+        std::strtoul(date.substr(5, 2).c_str(), NULL, 10));
 
-	dayLimit = daysInMonth[month - 1];
+    day = static_cast<unsigned int>(
+        std::strtoul(date.substr(8, 2).c_str(), NULL, 10));
 
-	if (month == 2 && isLeap)
-		dayLimit = 29;
+    if (month < 1 || month > 12 || day < 1 || day > 31)
+        return (false);
 
-	if (day > dayLimit)
-		return (false);
+    isLeap = (year % 400 == 0 ||
+              (year % 4 == 0 && year % 100 != 0));
 
-	return (true);
+    dayLimit = daysInMonth[month - 1];
+
+    if (month == 2 && isLeap)
+        dayLimit = 29;
+
+    if (day > dayLimit)
+        return (false);
+
+    return (true);
 }
 bool BitcoinExchange::controlAmount(const std::string& amountStr, double& amountd)
 {
